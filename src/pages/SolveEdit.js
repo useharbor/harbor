@@ -16,38 +16,118 @@ const flashcardsData = [
   // ...add as many flashcards as you like
 ];
 
-const Page = () => {
-  const db = firebase.firestore();
+const workerRef = "b6nzDKzQhhUuBDmWW5JC"; // TODO: get this from the user's login
+const db = firebase.firestore();
 
-  const onPageLoad = () => {
-    console.log("Page loaded");
-    db.collection("Jobs")
-      .get()
-      .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          console.log(`${doc.id} => ${doc.data()}`);
-          flashcardsData.push(doc.data());
-        });
-      });
-  };
+function Page() {
+  // const db = firebase.firestore();
+
+  const [cardContent, setCardContent] = useState("");
+  const [seedContent, setSeedContent] = useState("");
+  const [jobId, setJobId] = useState("");
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  // var original = "";
 
   // Use useEffect to run onPageLoad on page load
   useEffect(() => {
     onPageLoad();
   }, []); // The empty dependency array [] ensures it runs only once on page load
 
-  const [currentIndex, setCurrentIndex] = useState(0);
-
-  const goToPrevious = () => {
-    setCurrentIndex((prevIndex) =>
-      prevIndex > 0 ? prevIndex - 1 : flashcardsData.length - 1
-    );
+  const getNewCard = async () => {
+    const displayEditCardURL = `https://us-central1-harbor-db.cloudfunctions.net/displayEditCard?workerRef=${workerRef}`;
+    const response = await fetch(displayEditCardURL);
+    const data = await response.json();
+    const edit = data.edit;
+    const original = data.original;
+    if (edit === null || original === null) {
+      console.log("No edit found");
+      return;
+    }
+    console.log(edit, original);
+    setCardContent(edit._fieldsProto.content.stringValue);
+    setSeedContent(original._fieldsProto.seed_content.stringValue);
+    setJobId(original._fieldsProto.job_id.stringValue);
   };
 
-  const goToNext = () => {
-    setCurrentIndex((prevIndex) =>
-      prevIndex < flashcardsData.length - 1 ? prevIndex + 1 : 0
-    );
+  const onPageLoad = async (e) => {
+    console.log("Page loaded");
+    getNewCard();
+  };
+
+  const [text, setText] = useState(cardContent);
+  const handleTextChange = (event) => {
+    setText(event.target.value);
+  };
+
+  // const [currentIndex, setCurrentIndex] = useState(0);
+
+  const goToNext = () => {};
+
+  const handleInvalid = async (e) => {
+    setCurrentIndex((prevIndex) => prevIndex > 0 ? prevIndex - 1 : flashcardsData.length - 1);
+
+    try {
+      await db.collection("ContentEdits").add({
+        assigned: true,
+        content: cardContent,
+        job_id: jobId,
+        job_name: "EXISTING",
+        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+        voting_card: true,
+        worker: workerRef,
+      });
+      getNewCard();
+    } catch (error) {
+      console.error("Error adding document: ", error);
+    }
+  };
+
+  // increment num_edits
+  // add yourself to workers[]
+  // if the num_edits = 3, then send the payment to everyone under workers[]
+  // and set status to 3
+  const handleEdit = async (e) => {
+    setCurrentIndex((prevIndex) => prevIndex > 0 ? prevIndex - 1 : flashcardsData.length - 1);
+
+    try {
+      // console.log("original", original);
+      await db.collection("ContentEdits").add({
+        assigned: true,
+        content: text,
+        job_id: jobId,
+        job_name: "EXISTING",
+        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+        voting_card: true,
+        worker: workerRef,
+      });
+      getNewCard();
+    } catch (error) {
+      console.error("Error adding document: ", error);
+    }
+  };
+
+  // increment num_edits
+  // add yourself to workers[]
+  // if the num_edits = 3, then send the payment to everyone under workers[]
+  // and set status to 3
+  const handleGood = async (e) => {
+    setCurrentIndex((prevIndex) => prevIndex > 0 ? prevIndex - 1 : flashcardsData.length - 1);
+
+    try {
+      await db.collection("ContentEdits").add({
+        assigned: true,
+        content: cardContent,
+        job_id: jobId,
+        job_name: "EXISTING",
+        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+        voting_card: true,
+        worker: workerRef,
+      });
+      getNewCard();
+    } catch (error) {
+      console.error("Error adding document: ", error);
+    }
   };
 
   return (
@@ -75,26 +155,41 @@ const Page = () => {
               </div>
           </div>
           <div className="flex-1 p-4">
-                  <EditableTextBox
-                      initialText={flashcardsData[currentIndex].current}
+                <div>
+                  <label htmlFor="editableInput">Edit me:</label>
+                  <input
+                    type="text"
+                    id="editableInput"
+                    value={text}
+                    onChange={handleTextChange}
+                    className="w-full p-4 text-x1"
                   />
-                  <div className="flex mt-5">
-                      <button className="mx-2 bg-gray-300 hover:bg-gray-400 text-black font-bold py-6 px-6 rounded" onClick={goToPrevious}>
-                      Invalid
-                      </button>
-                      <button className="mx-2 bg-gray-300 hover:bg-gray-400 text-black font-bold p-4 rounded" onClick={goToNext}>
-                      Edit
-                      </button>
-                      <button className="mx-2 bg-gray-300 hover:bg-gray-400 text-black font-bold py-6 px-6 rounded" onClick={goToNext}>
-                      Good
-                      </button>
-                  </div>
+                </div>
+                <div className="flex mt-5">
+                  <button
+                    className="mx-2 bg-gray-300 hover:bg-gray-400 text-black font-bold py-6 px-6 rounded"
+                    onClick={handleInvalid}
+                  >
+                    Flag
+                  </button>
+                  <button
+                    className="mx-2 bg-gray-300 hover:bg-gray-400 text-black font-bold py-6 px-6 rounded"
+                    onClick={handleEdit}
+                  >
+                    Edit
+                  </button>
+                  <button
+                    className="mx-2 bg-gray-300 hover:bg-gray-400 text-black font-bold py-6 px-6 rounded"
+                    onClick={handleGood}
+                  >
+                    Good
+                  </button>
+                </div>
           </div>
         </div>
         <Footer></Footer>
     </>
-    
   );
-};
+}
 
 export default Page;
