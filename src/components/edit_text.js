@@ -15,7 +15,7 @@ const EditableTextBox = ({ initialText }) => {
         id="editableInput"
         value={text}
         onChange={handleTextChange}
-        className="w-full h-16 p-4 text-x1"
+        className="w-full p-4 text-x1"
       />
     </div>
   );
