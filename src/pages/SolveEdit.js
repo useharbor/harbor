@@ -4,11 +4,15 @@ import EditableTextBox from "../components/edit_text.js";
 import SolveNavbar from "../components/solve_navbar.js";
 import firebase from "firebase/compat/app";
 import "firebase/compat/firestore";
+import Footer from "../components/footer";
 
 const flashcardsData = [
-  { front: "seeded text 1", back: "Back of Card 1" },
-  { front: "seeded text 2", back: "Back of Card 2" },
-  { front: "seeded text 3", back: "Back of Card 3" },
+  { current: "She is studying computer science at the university.", 
+    original: "She learns computing knowledge at the educational institution." },
+  { current: "The meeting will happen in on Zoom.", 
+    original: "The conference will take place in a virtual environment." },
+  { current: "The artist exhibited their abstract paintings at the contemporary art gallery.", 
+    original: "The creator displayed their summary drawings at the present-day art exhibition." },
   // ...add as many flashcards as you like
 ];
 
@@ -49,24 +53,36 @@ const Page = () => {
   return (
     <>
         <SolveNavbar/>
-        <div className="flex">
-          <div className="flex-1 p-4 bg-gray-200">
+        <div className="Instruction">
+            <header className="bg-indigo-300 text-[20px] text-center font-semibold py-2 px-4">
+                Given the original text and current translation, choose to invalidate if the translation is very incorrect, edit it, or confirm that it is good.
+            </header>
+        </div>
+        <div>
+            <header className="w-full h-100 text-[20px] items-center text-center mt-4 mb-2">
+                Original Translation:
+            </header>
+            <header className="w-full h-100 text-[30px] items-center text-center">
+                {flashcardsData[currentIndex].original}
+            </header>
+        </div>
+        <div className="flex p-20">
+          <div className="flex-1 p-4">
               <div className="flex flex-col items-center">
                   <Flashcard
-                      frontContent={<div className="text-center">{flashcardsData[currentIndex].front}</div>}
-                      backContent={<div className="text-center">{flashcardsData[currentIndex].back}</div>}
+                      frontContent={<div className="text-center">{flashcardsData[currentIndex].current}</div>}
                   />
               </div>
           </div>
-          <div className="flex-1 p-4 bg-blue-200">
+          <div className="flex-1 p-4">
                   <EditableTextBox
-                      initialText={flashcardsData[currentIndex].front}
+                      initialText={flashcardsData[currentIndex].current}
                   />
                   <div className="flex mt-5">
                       <button className="mx-2 bg-gray-300 hover:bg-gray-400 text-black font-bold py-6 px-6 rounded" onClick={goToPrevious}>
                       Invalid
                       </button>
-                      <button className="mx-2 bg-gray-300 hover:bg-gray-400 text-black font-bold py-6 px-6 rounded" onClick={goToNext}>
+                      <button className="mx-2 bg-gray-300 hover:bg-gray-400 text-black font-bold p-4 rounded" onClick={goToNext}>
                       Edit
                       </button>
                       <button className="mx-2 bg-gray-300 hover:bg-gray-400 text-black font-bold py-6 px-6 rounded" onClick={goToNext}>
@@ -75,6 +91,7 @@ const Page = () => {
                   </div>
           </div>
         </div>
+        <Footer></Footer>
     </>
     
   );

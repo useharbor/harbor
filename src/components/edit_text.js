@@ -8,7 +8,7 @@ const EditableTextBox = ({ initialText }) => {
   };
 
   return (
-    <div>
+    <div className='p-4'>
       <label htmlFor="editableInput">Edit me:</label>
       <input
         type="text"

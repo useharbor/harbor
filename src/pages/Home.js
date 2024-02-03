@@ -43,7 +43,7 @@ export default function Home() {
         <h2 className="text-[30px] mb-8 border-b-2 border-gray-400 pb-2">Harbor is a project to translate text with human validation</h2>
         <p className="mb-10">
         Harbor stands out from traditional online translators like Google Translate 
-        by addressing their limitations. While automated services may offer quick 
+        by addressing their limitations. While these automated services may offer quick 
         translations, they often lack accuracy and struggle with cultural nuances 
         and context. Harbor combines human validation with advanced technology, 
         engaging native speakers to provide precise and culturally sensitive translations. 
