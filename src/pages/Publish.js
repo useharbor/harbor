@@ -1,6 +1,9 @@
 import React from "react";
 import ContentTextBox from "../components/ContentTextBox.js";
 import PaymentTextBox from "../components/PaymentTextBox";
+import JobForm from "../components/JobForm.js";
+
+// const { getFirestore, Timestamp } = require("firebase-admin/firestore");
 
 export default function Home() {
   return (
@@ -9,13 +12,7 @@ export default function Home() {
         <h1 className="text-2xl font-bold mb-4">Publish</h1>
         <p>Create a problem to be solved by the community.</p>
       </div>
-      <div className="p-4">
-        <ContentTextBox />
-        <PaymentTextBox />
-        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-          Submit
-        </button>
-      </div>
+      <JobForm />
     </div>
   );
 }
