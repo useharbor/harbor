@@ -7,6 +7,11 @@ export default function Navbar() {
             <nav className="flex justify-between items-center py-4 border-b-2 px-4">
                 <Link to="/" className="text-xl font-bold">Harbor</Link>
                 <ul>
+                    <CustomLink to="/solve" className="text-indigo-700 bg-white border border-indigo-700 hover:bg-indigo-700 hover:text-white font-semibold py-2 px-4 rounded shadow hover:shadow-md transition duration-300 ease-in-out mx-2">
+                        Solve
+                    </CustomLink>
+                </ul>
+                <ul>
                     <CustomLink to="/login" className="text-indigo-700 bg-white border border-indigo-700 hover:bg-indigo-700 hover:text-white font-semibold py-2 px-4 rounded shadow hover:shadow-md transition duration-300 ease-in-out mx-2">
                         Login / Sign Up
                     </CustomLink>
