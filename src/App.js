@@ -6,20 +6,23 @@ import Solve from './pages/SolveEdit.js';
 import SolveVote from './pages/SolveVote.js';
 import Publish from "./pages/Publish.js";
 import { Routes, Route } from "react-router-dom";
+import { CurrentUserProvider } from './UserContext';
 
 function App() {
   return (
     <>
-      <Navbar />
-      <div>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path='/solve' element={<Solve />} />
-          <Route path='/solve-vote' element={<SolveVote />} />
-          <Route path="/publish" element={<Publish />} />
-        </Routes>
-      </div>
+      <CurrentUserProvider>
+        <Navbar />
+        <div>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/login" element={<Login />} />
+            <Route path='/solve' element={<Solve />} />
+            <Route path='/solve-vote' element={<SolveVote />} />
+            <Route path="/publish" element={<Publish />} />
+          </Routes>
+        </div>
+      </CurrentUserProvider>
     </>
   );
 }
