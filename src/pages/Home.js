@@ -11,10 +11,10 @@ export default function Home() {
           <div className="flex-1 p-20 bg-cobalt-blue text-white">
             <div className="flex flex-col items-left">
               <h1 className="text-[64px] mb-4 font-semibold">Solve</h1>
-              <p className="text-[28px] mb-4">Solve translation problems and get paid out in crypto</p>
+              <p className="text-[30px] mb-4">Solve translation problems and get paid out in crypto</p>
             </div>
           </div>
-          <div className="flex-1 p-12 bg-cobalt-blue text-white">
+          <div className="flex-1 p-14 bg-cobalt-blue text-white">
             <SolveImg
               style={{ width: '300px', height: '300px' }}
             />
@@ -24,10 +24,10 @@ export default function Home() {
           <div className="flex-1 p-20 bg-cobalt-blue text-white">
             <div className="flex flex-col items-left">
               <h1 className="text-[64px] mb-4 font-semibold">Publish</h1>
-              <p className="text-[28px] mb-4">Use crowdsourcing to perform and validate your translation tasks</p>
+              <p className="text-[30px] mb-4">Use crowdsourcing to perform and validate your translation tasks</p>
             </div>
           </div>
-          <div className="flex-1 p-12 bg-cobalt-blue text-white">
+          <div className="flex-1 p-14 bg-cobalt-blue">
             <div>
               <PublishImg
                 style={{ width: '300px', height: '300px' }}
@@ -36,15 +36,15 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <div>
-        <h2>Harbor is a project to translate text with human validation</h2>
-        <p>
+      <div className="text-gray-800 p-12">
+        <h2 className="text-[30px] mb-12 border-b-2 border-gray-400 pb-2">Harbor is a project to translate text with human validation</h2>
+        <p className="mb-10">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
           eiusmod tempor incididunt ut labore et dolore magna aliqua...
         </p>
 
-        <h2>How it works</h2>
-        <p>
+        <h2 className="text-[30px] mb-12 border-b-2 border-gray-400 pb-2">How it works</h2>
+        <p className="mb-4">
           Anyone can publish a translation problem. Input the content you want
           translated and fuel the problem with a cryptocurrency reward. The
           problem will be solved by the community and validated by other
@@ -52,8 +52,8 @@ export default function Home() {
           distributed to the workers.
         </p>
 
-        <h2>Why Harbor</h2>
-        <p>
+        <h2 className="text-[30px] mb-12 border-b-2 border-gray-400 pb-2">Why Harbor</h2>
+        <p className="mb-4">
           Traditional translation services are expensive, slow, and unreliable.
           Technologies like Google Translate and LLMs still make frequent
           mistakes. There is no guarantee the output is correct and results
@@ -64,7 +64,7 @@ export default function Home() {
           get accurate translations and validation at a fraction of the cost.
         </p>
 
-        <h2>Get started</h2>
+        <h2 className="text-[30px] mb-12 border-b-2 border-gray-400 pb-2">Get started</h2>
         <p>
           As as worker, you can solve a problem by translating the content and
           correcting any mistakes you see. You will be rewarded with
