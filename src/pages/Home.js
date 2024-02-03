@@ -2,15 +2,23 @@ import React from 'react';
 
 export default function Home() {
     return (
-        <div className="flex justify-between p-4">
-            <div className="flex-1 mr-2 p-4 border-r-2">
-                <h1 className="text-2xl font-bold mb-4">Solve</h1>
-                <p>Harbor is a project to translate text validated by humans</p>
+        <>
+            <div className="flex">
+                <div className="flex-1 p-4 bg-blue-200 border-r border-gray-300 font-mono">
+                    <h1 className="text-3xl font-bold mb-4 font-mono">Solve</h1>
+                    <p>Harbor is a project to translate text validated by humans</p>
+                </div>
+                <div className="flex-1 p-4 bg-blue-200 font-mono">
+                    <h1 className="text-3xl font-bold mb-4 font-mono">Publish</h1>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua...</p>
+                </div>
             </div>
-            <div className="flex-1 ml-2 p-4">
-                <h1 className="text-2xl font-bold mb-4">Publish</h1>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua...</p>
+            <div>
+                <header >
+                    More info here
+                </header>
             </div>
-        </div>
+        </>
+        
     );
 }
