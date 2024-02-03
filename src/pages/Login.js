@@ -16,21 +16,19 @@ function SignInSignUp() {
 
 
     const auth = getAuth(app);
-    const createUser = (email, password) => {
-
-        createUserWithEmailAndPassword(auth, email, password)
-            .then((userCredential) => {
-                // Signed up 
-                const user = userCredential.user;
-                // Additional actions upon successful signup, if needed
-                console.log("User created successfully with email:", user.email);
-            })
-            .catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                // Handle errors here
-                console.error("Error creating user:", errorCode, errorMessage);
-            });
+    const createUser = async (email, password) => {
+        try {
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+            // Signed up 
+            const user = userCredential.user;
+            console.log("User created successfully with email:", user.email);
+            return user; // Returning the user object
+        } catch (error) {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            console.error("Error creating user:", errorCode, errorMessage);
+            return null; // Returning null in case of error
+        }
     };
 
     const logInUser = (email, password) => {
@@ -51,38 +49,38 @@ function SignInSignUp() {
     const handleSignUp = () => {
         if (name && newEmail && newPassword && newEmail.includes('@') && newEmail.includes('.')) {
             if (role === 'solver') {
-                // // Add user to 'solvers' collection
-                // const db = app.firestore();
-                // addDoc(collection(db, "solvers"), {
-                //     name: name,
-                //     email: newEmail,
-                //     role: role
-                // })
-                //     .then((docRef) => {
-                //         console.log("Document written with ID: ", docRef.id);
-                //     })
-                //     .catch((error) => {
-                //         console.error("Error adding document: ", error);
-                //     });
+                createUser(newEmail, newPassword);
+                // Add user to 'solvers' collection
+                const db = app.firestore();
+                addDoc(collection(db, "Workers"), {
+                    name: name,
+                    email: newEmail,
+                    role: role
+                })
+                    .then((docRef) => {
+                        console.log("Document written with ID: ", docRef.id);
+                    })
+                    .catch((error) => {
+                        console.error("Error adding document: ", error);
+                    });
                 setCurrentUser('solver');
             } else {
-                // // Add user to 'publishers' collection
-                // const db = app.firestore();
-                // addDoc(collection(db, "publishers"), {
-                //     name: name,
-                //     email: newEmail,
-                //     role: role
-                // })
-                //     .then((docRef) => {
-                //         console.log("Document written with ID: ", docRef.id);
-                //     })
-                //     .catch((error) => {
-                //         console.error("Error adding document: ", error);
-                //     });
+                // Add user to 'publishers' collection
+                const db = app.firestore();
+                addDoc(collection(db, "pPblishers"), {
+                    name: name,
+                    email: newEmail,
+                    role: role
+                })
+                    .then((docRef) => {
+                        console.log("Document written with ID: ", docRef.id);
+                    })
+                    .catch((error) => {
+                        alert("Error adding document: ", error);
+                    });
                 setCurrentUser('publisher');
             }
 
-            // createUser(newEmail, newPassword);
         } else {
             console.error("Error signing up.");
             alert("Please fill all fields to sign up.");
@@ -91,8 +89,9 @@ function SignInSignUp() {
 
     const handleLogIn = () => {
         if (oldEmail && oldEmail.includes('@') && oldEmail.includes('.') && oldPassword) {
-            setCurrentUser('publisher');
-            // logInUser(oldEmail, oldPassword);
+            // setCurrentUser('publisher');
+            logInUser(oldEmail, oldPassword);
+
         } else {
             console.error("Error logging in.");
             alert("Please fill all fields to log in.");
@@ -129,8 +128,12 @@ function SignInSignUp() {
                             <input type="email" placeholder="Email" value={newEmail} className="input-field mb-4 p-2 border rounded" onChange={(e) => setNewEmail(e.target.value)} />
                             <input type="password" placeholder="Password" value={newPassword} className="input-field mb-4 p-2 border rounded" onChange={(e) => setNewPassword(e.target.value)} />
                             <div className="flex">
-                                <button onClick={() => setRole('solver')} className={`font-bold py-2 px-4 rounded transition-colors w-1/2 mr-2 ${role === 'solver' ? 'bg-emerald-600 text-white' : 'bg-white text-emerald-400 border text-emerald-600'}`}>Solver</button>
-                                <button onClick={() => setRole('publisher')} className={`font-bold py-2 px-4 rounded transition-colors w-1/2 ml-2 ${role === 'publisher' ? 'bg-emerald-600 text-white' : 'bg-white text-emerald-400 border text-emerald-600'}`}>Publisher</button>
+                                <button onClick={() => setRole('solver')} className={`font-bold py-2 px-4 rounded transition-colors w-1/2 mr-2 ${role === 'solver' ? 'bg-emerald-600 text-white' : 'bg-white text-emerald-400 border text-emerald-600'}`}>
+                                    Solver
+                                </button>
+                                <button onClick={() => setRole('publisher')} className={`font-bold py-2 px-4 rounded transition-colors w-1/2 ml-2 ${role === 'publisher' ? 'bg-emerald-600 text-white' : 'bg-white text-emerald-400 border text-emerald-600'}`}>
+                                    Publisher
+                                </button>
                             </div>
                             <h1 className="mb-4 pt-2">
                                 <span> Already have an account? </span>

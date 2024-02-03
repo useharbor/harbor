@@ -9,29 +9,29 @@ export default function Home() {
       <div className="flex">
         <div className="flex border-r border-white w-1/2 flex-wrap">
           <div className="flex-1 p-20 bg-cobalt-blue text-white">
-              <div className="flex flex-col items-left">
-                <h1 className="text-6xl mb-4 font-semibold">Solve</h1>
-                <p className="text-4xl mb-4">Solve translation problems and get paid out in crypto</p>
-              </div>
+            <div className="flex flex-col items-left">
+              <h1 className="text-[64px] mb-4 font-semibold">Solve</h1>
+              <p className="text-[28px] mb-4">Solve translation problems and get paid out in crypto</p>
+            </div>
           </div>
           <div className="flex-1 p-12 bg-cobalt-blue text-white">
-                <SolveImg 
-                    style={{ width: '300px', height: '300px' }}    
-                />
+            <SolveImg
+              style={{ width: '300px', height: '300px' }}
+            />
           </div>
         </div>
         <div className="flex border-r border-white w-1/2 flex-wrap">
           <div className="flex-1 p-20 bg-cobalt-blue text-white">
-              <div className="flex flex-col items-left">
-                <h1 className="text-6xl mb-4 font-semibold">Publish</h1>
-                <p className="text-4xl mb-4">Use crowdsourcing to perform and validate your translation tasks</p>
-              </div>
+            <div className="flex flex-col items-left">
+              <h1 className="text-[64px] mb-4 font-semibold">Publish</h1>
+              <p className="text-[28px] mb-4">Use crowdsourcing to perform and validate your translation tasks</p>
+            </div>
           </div>
           <div className="flex-1 p-12 bg-cobalt-blue text-white">
             <div>
-                <PublishImg 
-                    style={{ width: '300px', height: '300px' }}    
-                />
+              <PublishImg
+                style={{ width: '300px', height: '300px' }}
+              />
             </div>
           </div>
         </div>
