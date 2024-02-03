@@ -1,24 +1,49 @@
-import React, { useState } from 'react';
-import Flashcard from '../components/flashcard.js';
-import EditableTextBox from '../components/edit_text.js';
-import SolveNavbar from '../components/solve_navbar.js';
+import React, { useEffect, useState } from "react";
+import Flashcard from "../components/flashcard.js";
+import EditableTextBox from "../components/edit_text.js";
+import SolveNavbar from "../components/solve_navbar.js";
+import firebase from "firebase/compat/app";
+import "firebase/compat/firestore";
 
 const flashcardsData = [
-  { front: 'seeded text 1', back: 'Back of Card 1' },
-  { front: 'seeded text 2', back: 'Back of Card 2' },
-  { front: 'seeded text 3', back: 'Back of Card 3' },
+  { front: "seeded text 1", back: "Back of Card 1" },
+  { front: "seeded text 2", back: "Back of Card 2" },
+  { front: "seeded text 3", back: "Back of Card 3" },
   // ...add as many flashcards as you like
 ];
 
 const Page = () => {
+  const db = firebase.firestore();
+
+  const onPageLoad = () => {
+    console.log("Page loaded");
+    db.collection("Jobs")
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          console.log(`${doc.id} => ${doc.data()}`);
+          flashcardsData.push(doc.data());
+        });
+      });
+  };
+
+  // Use useEffect to run onPageLoad on page load
+  useEffect(() => {
+    onPageLoad();
+  }, []); // The empty dependency array [] ensures it runs only once on page load
+
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const goToPrevious = () => {
-    setCurrentIndex((prevIndex) => prevIndex > 0 ? prevIndex - 1 : flashcardsData.length - 1);
+    setCurrentIndex((prevIndex) =>
+      prevIndex > 0 ? prevIndex - 1 : flashcardsData.length - 1
+    );
   };
 
   const goToNext = () => {
-    setCurrentIndex((prevIndex) => prevIndex < flashcardsData.length - 1 ? prevIndex + 1 : 0);
+    setCurrentIndex((prevIndex) =>
+      prevIndex < flashcardsData.length - 1 ? prevIndex + 1 : 0
+    );
   };
 
   return (
@@ -50,8 +75,8 @@ const Page = () => {
                   </div>
           </div>
         </div>
+      </div>
     </>
-    
   );
 };
 
