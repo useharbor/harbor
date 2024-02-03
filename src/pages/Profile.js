@@ -9,10 +9,10 @@ export default function Profile() {
     return (
         <>
             <div>
-                {currentUser == 'solver' && <ul>
+                {currentUser && currentUser[1] == 'solver' && <ul>
                     <Solver_Profile></Solver_Profile>
                 </ul>}
-                {currentUser == 'publisher' && <ul>
+                {currentUser && currentUser[1] == 'publisher' && <ul>
                     <Publisher_Profile></Publisher_Profile>
                 </ul>}
             </div>

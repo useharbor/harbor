@@ -1,6 +1,9 @@
 import React from 'react';
+import { useCurrentUser } from "../UserContext";
 
 export default function Solver_Profile() {
+    const { currentUser, setCurrentUser } = useCurrentUser();
+
     return (
         <>
             <div className="p-12">
@@ -10,9 +13,7 @@ export default function Solver_Profile() {
                 </div>
                 <div className="mb-10 font-bold text-[20px]">
                     <ul>
-                        <li className="mb-4">Name: </li>
-                        <li className="mb-4">Username: </li>
-                        <li className="mb-4">Email: </li>
+                        <li className="mb-4">Username/Email: {currentUser[0]} </li>
                     </ul>
                 </div>
                 <div className="mb-8 font-bold text-[20px]">

@@ -40,13 +40,16 @@ export default function Home() {
         </div>
       </div>
       <div className="text-gray-800 p-12">
-        <h2 className="text-[30px] mb-12 border-b-2 border-gray-400 pb-2">Harbor is a project to translate text with human validation</h2>
+        <h2 className="text-[30px] mb-8 border-b-2 border-gray-400 pb-2">Harbor is a project to translate text with human validation</h2>
         <p className="mb-10">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua...
+        Harbor stands out from traditional online translators like Google Translate 
+        by addressing their limitations. While automated services may offer quick 
+        translations, they often lack accuracy and struggle with cultural nuances 
+        and context. Harbor combines human validation with advanced technology, 
+        engaging native speakers to provide precise and culturally sensitive translations. 
         </p>
 
-        <h2 className="text-[30px] mb-12 border-b-2 border-gray-400 pb-2">How it works</h2>
+        <h2 className="text-[30px] mb-18 mt-10">How it works</h2>
         <p className="mb-4">
           Anyone can publish a translation problem. Input the content you want
           translated and fuel the problem with a cryptocurrency reward. The
@@ -55,7 +58,7 @@ export default function Home() {
           distributed to the workers.
         </p>
 
-        <h2 className="text-[30px] mb-12 border-b-2 border-gray-400 pb-2">Why Harbor</h2>
+        <h2 className="text-[30px] mb-18 mt-10">Why Harbor</h2>
         <p className="mb-4">
           Traditional translation services are expensive, slow, and unreliable.
           Technologies like Google Translate and LLMs still make frequent
@@ -67,7 +70,7 @@ export default function Home() {
           get accurate translations and validation at a fraction of the cost.
         </p>
 
-        <h2 className="text-[30px] mb-12 border-b-2 border-gray-400 pb-2">Get started</h2>
+        <h2 className="text-[30px] mb-18 mt-10">Get started</h2>
         <p>
           As as worker, you can solve a problem by translating the content and
           correcting any mistakes you see. You will be rewarded with
