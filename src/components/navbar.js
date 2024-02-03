@@ -28,27 +28,23 @@ export default function Navbar() {
                 <div className="flex items-center">
                     {currentUser == null ? (
                         <ul>
-                            <CustomLink to="/login" className="text-white hover:bg-white hover:text-cobalt-blue border border-white font-semibold py-2 px-4 rounded hover:shadow-md transition duration-300 ease-in-out mx-2">
+                            <CustomLink to="/login" className="text-white hover:bg-white hover:text-white border border-white font-semibold py-2 px-4 rounded hover:shadow-md transition duration-300 ease-in-out mx-2">
                                 Login / Sign Up
                             </CustomLink>
                         </ul>
                     ) : (
-                        <ul>
+                        <ul className="flex items-center space-x-4">
+                            <CustomLink to="/profile" className="text-white hover:bg-white hover:text-white border border-white font-semibold py-2 px-4 rounded hover:shadow-md transition duration-300 ease-in-out">
+                                Profile
+                            </CustomLink>
                             <Logout />
                         </ul>
                     )}
                     <ul>
-                        <CustomLink to="/" className="flex items-center text-white hover:bg-white hover:text-cobalt-blue border border-white font-semibold py-1 px-2 rounded hover:shadow-md transition duration-300 ease-in-out mx-2">
-                            <div className="hover:hidden">
-                                <Earth
-                                    style={{ width: '20px', height: '20px', marginRight: '6px' }}
-                                />
-                            </div>
-                            <div className="hidden hover:flex">
-                                <CobaltEarth
-                                    style={{ width: '20px', height: '20px', marginRight: '6px' }}
-                                />
-                            </div>
+                        <CustomLink to="/" className="flex items-center text-white hover:bg-white hover:text-white border border-white font-semibold py-1 px-2 rounded hover:shadow-md transition duration-300 ease-in-out mx-2">
+                            <Earth
+                                style={{ width: '20px', height: '20px', marginRight: '6px' }}
+                            />
                             EN
                         </CustomLink>
                     </ul>
