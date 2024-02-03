@@ -6,6 +6,9 @@ module.exports = {
       backgroundColor: {
         'cobalt-blue': '#0000FF',
       },
+      textColor: {
+        'cobalt-blue': '#0000FF',
+      },
     },
     fontFamily: {
       inter: ['Inter', 'sans-serif'],
