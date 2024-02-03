@@ -22,9 +22,9 @@ export default function Navbar() {
                     </CustomLink>
                 </ul>
                 <ul>
-                    <CustomLink to="/login" className="hover:bg-white hover:text-white font-semibold py-2 px-4 rounded hover:shadow-md transition duration-300 ease-in-out mx-2">
-                        Login / Sign Up
-                    </CustomLink>
+                <CustomLink to="/login" className="hover:bg-white hover:text-white border border-white font-semibold py-2 px-4 rounded hover:shadow-md transition duration-300 ease-in-out mx-2">
+                    Login / Sign Up
+                </CustomLink>
                 </ul>
             </nav>
         </div>
