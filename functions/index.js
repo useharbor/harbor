@@ -13,7 +13,10 @@ const translate = new Translate();
 /* should be called when a job is created, before writing the content to the job document
  * ie, the content field in a Job document should be seeded text, not original text
  */
-exports.seeding = onRequest(async (request, response) => {
+exports.seeding = onRequest({ cors: true, auth: 'optional' }, async (request, response) => {
+    response.set('Access-Control-Allow-Origin', '*');
+    response.set('Access-Control-Allow-Methods', 'GET, POST');
+    response.set('Access-Control-Allow-Headers', 'Content-Type');
     try {
         // parse out text from the request
         const data = request.query;
@@ -33,7 +36,10 @@ exports.seeding = onRequest(async (request, response) => {
  * request: contains workerRef for the authenticated user/worker
  * response: ContentEditsRefs for the 2 assigned voting cards
  */
-exports.displayVoteCards = onRequest(async (request, response) => {
+exports.displayVoteCards = onRequest({ cors: true, auth: 'optional' }, async (request, response) => {
+    response.set('Access-Control-Allow-Origin', '*');
+    response.set('Access-Control-Allow-Methods', 'GET, POST');
+    response.set('Access-Control-Allow-Headers', 'Content-Type');
     try {
         const data = request.query
         const workerRef = data.workerRef;
@@ -73,7 +79,10 @@ exports.displayVoteCards = onRequest(async (request, response) => {
 });
 
 // called when a user opens the edit card page
-exports.displayEditCard = onRequest(async (request, response) => {
+exports.displayEditCard = onRequest({ cors: true, auth: 'optional' }, async (request, response) => {
+    response.set('Access-Control-Allow-Origin', '*');
+    response.set('Access-Control-Allow-Methods', 'GET, POST');
+    response.set('Access-Control-Allow-Headers', 'Content-Type');
     try {
         const data = request.query
         const workerRef = data.workerRef;
@@ -93,11 +102,14 @@ exports.displayEditCard = onRequest(async (request, response) => {
                     // update the workers array field in job document to include the workerRef
                     const workers = jobDoc.data().workers;
                     workers.push(workerRef);
-                    await jobDoc.ref.update({ workers: workers });
+                    const num_edits = jobDoc.data().num_edits;
+                    const new_num_edits = num_edits + 1;
+                    await jobDoc.ref.update({ workers: workers, num_edits : new_num_edits});
                     // update the workers docRef fields in the edit card document to include the workerRef
                     await contentEdit.ref.update({ worker: workerRef, assigned: true});
                     // return the ContentEditRefs for the edit card and the original job document
-                    response.json({ edit: contentEdit.ref, original: jobDoc.ref });
+                    console.log(contentEdit)
+                    response.json({ edit: contentEdit, original: jobDoc });
                     return;
                 }
             }
