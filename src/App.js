@@ -1,10 +1,11 @@
-import './App.css';
-import Navbar from './components/navbar';
-import Home from './pages/Home';
-import Login from './pages/Login.js';
+import "./App.css";
+import Navbar from "./components/navbar";
+import Home from "./pages/Home";
+import Login from "./pages/Login.js";
 import Solve from './pages/SolveEdit.js';
 import SolveVote from './pages/SolveVote.js';
-import { Routes, Route } from 'react-router-dom';
+import Publish from "./pages/Publish.js";
+import { Routes, Route } from "react-router-dom";
 
 function App() {
   return (
@@ -16,11 +17,10 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path='/solve' element={<Solve />} />
           <Route path='/solve-vote' element={<SolveVote />} />
-          {/* <Route path='/publish' element={<Publish />} /> */}
+          <Route path="/publish" element={<Publish />} />
         </Routes>
       </div>
     </>
-
   );
 }
 
