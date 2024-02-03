@@ -13,7 +13,7 @@ export default function Solver_Profile() {
                 </div>
                 <div className="mb-8 font-bold text-[20px]">
                     <ul>
-                        <li>Username/Email: </li>
+                        <li>Username/Email: {currentUser[0]} </li>
                     </ul>
                 </div>
                 <div className="mb-8 font-bold text-[20px]">
