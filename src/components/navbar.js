@@ -24,7 +24,7 @@ export default function Navbar() {
                 </ul>}
                 {currentUser == null ?
                     <ul>
-                        <CustomLink to="/login" className="text-indigo-700 bg-white border border-indigo-700 hover:bg-indigo-700 hover:text-white font-semibold py-2 px-4 rounded shadow hover:shadow-md transition duration-300 ease-in-out mx-2">
+                        <CustomLink to="/login" className="hover:bg-white hover:text-white border border-white font-semibold py-2 px-4 rounded hover:shadow-md transition duration-300 ease-in-out mx-2">
                             Login / Sign Up
                         </CustomLink>
                     </ul>

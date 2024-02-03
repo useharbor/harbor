@@ -1,19 +1,39 @@
 import React from "react";
 import Footer from "../components/footer";
+import { ReactComponent as SolveImg } from '../assets/solvePattern.svg';
+import { ReactComponent as PublishImg } from '../assets/publishPattern.svg';
 
 export default function Home() {
   return (
     <>
       <div className="flex">
-        <div className="flex-1 p-4 bg-cobalt-blue text-white border-r border-white">
-          <h1 className="text-3xl font-bold mb-4">Solve</h1>
-          <p>Solve translation problems and get paid out in crypto</p>
+        <div className="flex border-r border-white w-1/2 flex-wrap">
+          <div className="flex-1 p-20 bg-cobalt-blue text-white">
+              <div className="flex flex-col items-left">
+                <h1 className="text-6xl mb-4 font-semibold">Solve</h1>
+                <p className="text-4xl mb-4">Solve translation problems and get paid out in crypto</p>
+              </div>
+          </div>
+          <div className="flex-1 p-12 bg-cobalt-blue text-white">
+                <SolveImg 
+                    style={{ width: '300px', height: '300px' }}    
+                />
+          </div>
         </div>
-        <div className="flex-1 p-4 bg-cobalt-blue text-white">
-          <h1 className="text-3xl font-bold mb-4">Publish</h1>
-          <p>
-            Use crowdsourcing to perform and validate your translation tasks
-          </p>
+        <div className="flex border-r border-white w-1/2 flex-wrap">
+          <div className="flex-1 p-20 bg-cobalt-blue text-white">
+              <div className="flex flex-col items-left">
+                <h1 className="text-6xl mb-4 font-semibold">Publish</h1>
+                <p className="text-4xl mb-4">Use crowdsourcing to perform and validate your translation tasks</p>
+              </div>
+          </div>
+          <div className="flex-1 p-12 bg-cobalt-blue text-white">
+            <div>
+                <PublishImg 
+                    style={{ width: '300px', height: '300px' }}    
+                />
+            </div>
+          </div>
         </div>
       </div>
       <div>
