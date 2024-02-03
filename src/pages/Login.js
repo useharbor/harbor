@@ -10,6 +10,7 @@
 //     );
 // }
 
+import app from '../Firebase';
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 
 import React, { useState } from 'react';
@@ -17,7 +18,7 @@ import React, { useState } from 'react';
 function SignInSignUp() {
     const [login, setLogin] = useState(true);
 
-    const auth = getAuth();
+    const auth = getAuth(app);
     const createUser = (email, password) => {
         createUserWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
