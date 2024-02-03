@@ -4,25 +4,25 @@ import { Link, useMatch, useResolvedPath } from 'react-router-dom';
 export default function Navbar() {
     return (
         <div>
-            <nav className="flex justify-between items-center py-4 px-4 bg-blue-300 shadow">
-                <Link to="/" className="text-xl font-bold font-mono">Harbor</Link>
+            <nav className="flex justify-between items-center py-4 px-4 bg-cobalt-blue shadow text-white border-b border-solid border-white">
+                <Link to="/" className="text-xl font-bold">Harbor</Link>
                 <ul>
-                    <CustomLink to="/solve" className="font-bold font-mono text-indigo-700 bg-blue-300 hover:bg-indigo-700 hover:text-white font-semibold py-2 px-4 rounded hover:shadow-md transition duration-300 ease-in-out mx-2">
+                    <CustomLink to="/solve" className="hover:bg-white hover:text-blue font-semibold py-2 px-4 rounded hover:shadow-md transition duration-300 ease-in-out mx-2">
                         Solve
                     </CustomLink>
                 </ul>
                 <ul>
-                    <CustomLink to="/publish" className="font-bold font-mono text-indigo-700 bg-blue-300 hover:bg-indigo-700 hover:text-white font-semibold py-2 px-4 rounded hover:shadow-md transition duration-300 ease-in-out mx-2">
+                    <CustomLink to="/publish" className="hover:bg-white hover:text-white font-semibold py-2 px-4 rounded hover:shadow-md transition duration-300 ease-in-out mx-2">
                         Publish
                     </CustomLink>
                 </ul>
                 <ul>
-                    <CustomLink to="/about" className="font-bold font-mono text-indigo-700 bg-blue-300 hover:bg-indigo-700 hover:text-white font-semibold py-2 px-4 rounded hover:shadow-md transition duration-300 ease-in-out mx-2">
+                    <CustomLink to="/about" className="hover:bg-white hover:text-white font-semibold py-2 px-4 rounded hover:shadow-md transition duration-300 ease-in-out mx-2">
                         About
                     </CustomLink>
                 </ul>
                 <ul>
-                    <CustomLink to="/login" className="font-bold font-mono text-indigo-700 bg-blue-300 hover:bg-indigo-700 hover:text-white font-semibold py-2 px-4 rounded hover:shadow-md transition duration-300 ease-in-out mx-2">
+                    <CustomLink to="/login" className="hover:bg-white hover:text-white font-semibold py-2 px-4 rounded hover:shadow-md transition duration-300 ease-in-out mx-2">
                         Login / Sign Up
                     </CustomLink>
                 </ul>
