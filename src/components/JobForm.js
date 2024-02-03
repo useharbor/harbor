@@ -12,6 +12,11 @@ function JobForm() {
     e.preventDefault();
 
     try {
+      //get the text field from
+      const seedingAPIUrl = `https://us-central1-harbor-db.cloudfunctions.net/seeding?text=${content}`;
+      const response = await fetch(seedingAPIUrl);
+      const data = await response.json();
+
       await db.collection("Jobs").add({
         content: content,
         job_id: Math.random().toString(36).substring(7),
@@ -20,7 +25,7 @@ function JobForm() {
         price: price,
         publisher: "publisher name",
         num_edits: 3,
-        seed_content: "seed content",
+        seed_content: data.seed,
         status: 0,
         target_language: "en",
         versions: [],
