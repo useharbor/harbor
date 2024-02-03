@@ -2,8 +2,8 @@ import "./App.css";
 import Navbar from "./components/navbar";
 import Home from "./pages/Home";
 import Login from "./pages/Login.js";
-import Solve from './pages/SolveEdit.js';
-import SolveVote from './pages/SolveVote.js';
+import Solve from "./pages/SolveEdit.js";
+import SolveVote from "./pages/SolveVote.js";
 import Publish from "./pages/Publish.js";
 import { Routes, Route } from "react-router-dom";
 import { CurrentUserProvider } from './UserContext';
@@ -23,6 +23,7 @@ function App() {
           </Routes>
         </div>
       </CurrentUserProvider>
+
     </>
   );
 }

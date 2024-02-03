@@ -32,7 +32,6 @@ export default function Navbar() {
                     <ul>
                         <Logout />
                     </ul>}
-                {/* // <h1>sjoajdsa</h1>} */}
             </nav>
         </div>
 

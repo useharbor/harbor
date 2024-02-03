@@ -14,7 +14,17 @@ function JobForm() {
     try {
       await db.collection("Jobs").add({
         content: content,
+        job_id: Math.random().toString(36).substring(7),
+        job_name: "job name",
+        original_language: "cn",
         price: price,
+        publisher: "publisher name",
+        num_edits: 3,
+        seed_content: "seed content",
+        status: 0,
+        target_language: "en",
+        versions: [],
+        workers: [],
       });
 
       alert("Data added to Firestore!");
