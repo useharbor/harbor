@@ -19,7 +19,6 @@ export default function Solve_Navbar() {
                 </ul>
             </nav>
         </div>
-
     );
 }
 
