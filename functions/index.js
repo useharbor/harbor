@@ -9,6 +9,8 @@
 
 const {onRequest} = require("firebase-functions/v2/https");
 const logger = require("firebase-functions/logger");
+const {initializeApp} = require("firebase-admin/app");
+const {getFirestore, Timestamp} = require("firebase-admin/firestore");
 
 // Create and deploy your first functions
 // https://firebase.google.com/docs/functions/get-started
@@ -17,3 +19,9 @@ const logger = require("firebase-functions/logger");
 //   logger.info("Hello logs!", {structuredData: true});
 //   response.send("Hello from Firebase!");
 // });
+
+initializeApp();
+
+exports.branchingedit = onRequest(async (request, response) => {
+    res.send("FILLER");
+});
