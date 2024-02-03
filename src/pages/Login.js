@@ -1,8 +1,10 @@
 import app from '../Firebase';
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
-import { collection, addDoc } from 'firebase/firestore';
 import React, { useState } from 'react';
 import { useCurrentUser } from '../UserContext';
+import { useNavigate } from 'react-router-dom';
+import firebase from "firebase/compat/app";
+import "firebase/compat/firestore";
+
 
 function SignInSignUp() {
     const [login, setLogin] = useState(true);
@@ -13,86 +15,110 @@ function SignInSignUp() {
     const [oldPassword, setOldPassword] = useState('');
     const [role, setRole] = useState('solver');
     const { currentUser, setCurrentUser } = useCurrentUser();
+    const navigate = useNavigate();
+    const db = firebase.firestore();
 
+    async function findUser(email) {
+        console.log("Finding user with email:", email);
+        const emailUsersSnapshot = await db.collection("Roles").where("email", "==", email).get();
+        if (emailUsersSnapshot.size > 1) {
+            // const firstUser = emailUsersSnapshot.docs[0].data();
+            return null;
+        }
+        // console.log("First user's name:", emailUsersSnapshot.docs[0].data().name);
+        return emailUsersSnapshot.docs;
+    }
 
-    const auth = getAuth(app);
-    const createUser = (email, password) => {
-
-        createUserWithEmailAndPassword(auth, email, password)
-            .then((userCredential) => {
-                // Signed up 
-                const user = userCredential.user;
-                // Additional actions upon successful signup, if needed
-                console.log("User created successfully with email:", user.email);
-            })
-            .catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                // Handle errors here
-                console.error("Error creating user:", errorCode, errorMessage);
-            });
-    };
-
-    const logInUser = (email, password) => {
-        signInWithEmailAndPassword(auth, email, password)
-            .then((userCredential) => {
-                // Signed in 
-                const user = userCredential.user;
-                console.log("User loggged in successfully with email:", user.email);
-            })
-            .catch((error) => {
-                // const errorCode = error.code;
-                const errorMessage = error.message;
-                // Handle sign-in errors here
-                alert(`Failed to sign in: ${errorMessage}`);
-            });
-    };
-
-    const handleSignUp = () => {
+    const handleSignUp = async () => {
         if (name && newEmail && newPassword && newEmail.includes('@') && newEmail.includes('.')) {
-            if (role === 'solver') {
-                // // Add user to 'solvers' collection
-                // const db = app.firestore();
-                // addDoc(collection(db, "solvers"), {
-                //     name: name,
-                //     email: newEmail,
-                //     role: role
-                // })
-                //     .then((docRef) => {
-                //         console.log("Document written with ID: ", docRef.id);
-                //     })
-                //     .catch((error) => {
-                //         console.error("Error adding document: ", error);
-                //     });
-                setCurrentUser('solver');
-            } else {
-                // // Add user to 'publishers' collection
-                // const db = app.firestore();
-                // addDoc(collection(db, "publishers"), {
-                //     name: name,
-                //     email: newEmail,
-                //     role: role
-                // })
-                //     .then((docRef) => {
-                //         console.log("Document written with ID: ", docRef.id);
-                //     })
-                //     .catch((error) => {
-                //         console.error("Error adding document: ", error);
-                //     });
-                setCurrentUser('publisher');
+            const docs = await findUser(newEmail);
+            if (!docs) {
+                console.error("Found users with same email.");
+                alert("Found users with same email.");
+                return
             }
+            if (docs.length === 0) {
+                if (role === 'solver') {
+                    // user = createUser(newEmail, newPassword);
+                    // Add user to 'solvers' collection
+                    try {
+                        await db.collection("Workers").add({
+                            name: name,
+                            email: newEmail,
+                            user_id: newEmail,
+                        });
+                        setCurrentUser([newEmail, 'solver']);
+                    } catch (error) {
+                        console.error("Error adding solver document: ", error);
+                        alert("Error adding solver document: ", error);
+                        return
+                    }
+                } else {
+                    // Add user to 'publishers' collection
+                    // user = createUser(newEmail, newPassword);
+                    try {
+                        await db.collection("Publishers").add({
+                            name: name,
+                            email: newEmail,
+                            user_id: newEmail,
+                        });
+                        setCurrentUser([newEmail, 'publisher']);
+                    } catch (error) {
+                        console.error("Error adding publisher document: ", error);
+                        alert("Error adding publisher document: ", error);
+                        return
+                    }
+                }
 
-            // createUser(newEmail, newPassword);
+                try {
+                    await db.collection("Roles").add({
+                        name: name,
+                        email: newEmail,
+                        user_id: newEmail,
+                        role: role,
+                        password: newPassword,
+                    });
+                } catch (error) {
+                    console.error("Error adding role document: ", error);
+                    alert("Error adding role document: ", error);
+                    return
+                }
+            } else if (docs.length === 1) {
+                console.error("Email alreeady exists.");
+                alert("Email already exists. Please log in.");
+                return
+            }
+            navigate('/');
         } else {
             console.error("Error signing up.");
             alert("Please fill all fields to sign up.");
         }
     };
 
-    const handleLogIn = () => {
+    const handleLogIn = async () => {
         if (oldEmail && oldEmail.includes('@') && oldEmail.includes('.') && oldPassword) {
-            setCurrentUser('publisher');
+            // setCurrentUser('publisher');
+            const docs = await findUser(oldEmail);
+            if (!docs) {
+                console.error("Found users with same email.");
+                alert("Found users with same email.");
+                return
+            }
+            if (docs.length === 0) {
+                console.error("Email does not exist.");
+                alert("Email does not exist.");
+            } else if (docs.length === 1) {
+                if (oldPassword !== docs[0].data().password) {
+                    console.error("Wrong password.");
+                    alert("Wrong password.");
+                    return
+                }
+                console.log("Logged in as: ", oldEmail);
+                setCurrentUser([oldEmail, docs[0].data().role]);
+                navigate('/');
+            }
             // logInUser(oldEmail, oldPassword);
+
         } else {
             console.error("Error logging in.");
             alert("Please fill all fields to log in.");
@@ -105,7 +131,7 @@ function SignInSignUp() {
                 {login &&
                     <>
                         <div className={`flex flex-col justify-center p-8 ${login ? 'opacity-100 visible' : 'opacity-0 invisible'}`}>
-                            <h1 className="font-bold text-xl mb-5">Sign in</h1>
+                            <h1 className="font-bold text-xl mb-5">Log In</h1>
                             <input type="email" placeholder="Email" value={oldEmail} className="input-field mb-4 p-2 border rounded" onChange={(e) => setOldEmail(e.target.value)} />
                             <input type="password" placeholder="Password" value={oldPassword} className="input-field mb-4 p-2 border rounded" onChange={(e) => setOldPassword(e.target.value)} />
                             {/* <h1 onClick={() => setLogin(false)} className="text-indigo-300 mb-4 hover:text-indigo-600">Forgot your password?</h1> */}
@@ -115,7 +141,7 @@ function SignInSignUp() {
                                     Create an account
                                 </span>
                             </h1>
-                            <button onClick={handleLogIn} className="bg-indigo-500 text-white font-bold py-2 px-4 rounded hover:bg-indigo-600 transition-colors">Sign In</button>
+                            <button onClick={handleLogIn} className="bg-indigo-500 text-white font-bold py-2 px-4 rounded hover:bg-indigo-600 transition-colors">Log In</button>
                         </div>
                     </>
                 }
@@ -129,8 +155,12 @@ function SignInSignUp() {
                             <input type="email" placeholder="Email" value={newEmail} className="input-field mb-4 p-2 border rounded" onChange={(e) => setNewEmail(e.target.value)} />
                             <input type="password" placeholder="Password" value={newPassword} className="input-field mb-4 p-2 border rounded" onChange={(e) => setNewPassword(e.target.value)} />
                             <div className="flex">
-                                <button onClick={() => setRole('solver')} className={`font-bold py-2 px-4 rounded transition-colors w-1/2 mr-2 ${role === 'solver' ? 'bg-emerald-600 text-white' : 'bg-white text-emerald-400 border text-emerald-600'}`}>Solver</button>
-                                <button onClick={() => setRole('publisher')} className={`font-bold py-2 px-4 rounded transition-colors w-1/2 ml-2 ${role === 'publisher' ? 'bg-emerald-600 text-white' : 'bg-white text-emerald-400 border text-emerald-600'}`}>Publisher</button>
+                                <button onClick={() => setRole('solver')} className={`font-bold py-2 px-4 rounded transition-colors w-1/2 mr-2 ${role === 'solver' ? 'bg-emerald-600 text-white' : 'bg-white text-emerald-400 border text-emerald-600'}`}>
+                                    Solver
+                                </button>
+                                <button onClick={() => setRole('publisher')} className={`font-bold py-2 px-4 rounded transition-colors w-1/2 ml-2 ${role === 'publisher' ? 'bg-emerald-600 text-white' : 'bg-white text-emerald-400 border text-emerald-600'}`}>
+                                    Publisher
+                                </button>
                             </div>
                             <h1 className="mb-4 pt-2">
                                 <span> Already have an account? </span>
